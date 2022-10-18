@@ -18,7 +18,7 @@
 
 ## Historia do projeto (branchs)
 
-- [MAIN](https://github.com/devtvas/-flutter_challenge_startaideia/tree/main) - 18/10/22 
+- [MAIN](https://github.com/devtvas/flutter_challenge_startaideia/tree/main) - 18/10/22 
 - [SAI-02]() - 19/10/22 
 - [SAI-03]() - 20/10/22 
 
