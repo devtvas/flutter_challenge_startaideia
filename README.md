@@ -8,8 +8,7 @@
 
 ### Layout desenvolvido
 
-<img src="https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/97/0e/e2/970ee217-13cf-1674-b016-461aca657663/pr_source.png/460x0w.png" height="350em" /> 
-<img src="assets/prints/tela-details.png" height="350em" /> 
+<img src="assets/prints/tela-detail.png" height="350em" /> 
 
 
 <h2>APK do projeto</h2>
