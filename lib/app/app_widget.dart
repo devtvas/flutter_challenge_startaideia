@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge_startaideia/app/app_pages.dart';
 import 'package:flutter_challenge_startaideia/app/core/constants.dart';
 import 'package:flutter_challenge_startaideia/app/core/theme.dart';
-import 'package:get/get.dart';
+import 'package:flutter_challenge_startaideia/app/modules/home/presenter/home_page.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/data/movie_repository.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/controller/movie_details_controler.dart';
+import 'package:provider/provider.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: Consts.kAppName,
-      theme: kThemeApp,
-      enableLog: true,
-      // logWriterCallback: Logger.write,
-      initialRoute: AppPages.INITIAL,
-      getPages: AppPages.routes,
-      // locale: TranslationService.locale,
-      // fallbackLocale: TranslationService.fallbackLocale,
-      // translations: TranslationService(),
+    return MultiProvider(
+      providers: [
+        Provider<MovieRepository>(create: (_) => MovieRepository()),
+        ChangeNotifierProvider<MovieDetailController>(
+            create: (context) => MovieDetailController(context.read()))
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: Consts.kAppName,
+        theme: kThemeApp,
+        home: const HomePage(),
+      ),
     );
   }
 }

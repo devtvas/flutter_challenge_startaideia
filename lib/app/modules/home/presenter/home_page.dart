@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/movie_details_page.dart';
-import 'package:get/get.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/pages/movie_details_page/movie_details_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,8 +15,13 @@ class HomePage extends StatelessWidget {
             const Center(child: Text("Home")),
             Center(
               child: ElevatedButton(
-                  onPressed: () {
-                    Get.to(() => MovieDetailPage());
+                  onPressed: () async {
+                    await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const MovieDetailPage(),
+                      ),
+                    );
                   },
                   child: Text("Movie")),
             ),
