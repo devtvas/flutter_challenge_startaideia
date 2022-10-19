@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 class MovieModel {
-  final int? id;
   final double? popularity;
   final int? voteCount;
   final bool? video;
   final String? posterPath;
+  final int? id;
   final bool? adult;
   final String? backdropPath;
   final String? originalLanguage;

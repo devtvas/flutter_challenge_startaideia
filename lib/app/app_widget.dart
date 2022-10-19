@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge_startaideia/app/app_pages.dart';
+import 'package:flutter_challenge_startaideia/app/core/constants.dart';
+import 'package:flutter_challenge_startaideia/app/core/theme.dart';
 import 'package:get/get.dart';
 
 class AppWidget extends StatelessWidget {
@@ -9,6 +11,8 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      title: Consts.kAppName,
+      theme: kThemeApp,
       enableLog: true,
       // logWriterCallback: Logger.write,
       initialRoute: AppPages.INITIAL,
