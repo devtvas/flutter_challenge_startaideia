@@ -7,9 +7,11 @@ import 'package:flutter_challenge_startaideia/app/modules/movie/domain/movie_det
 class MovieDetailController extends ChangeNotifier {
   final MovieRepository repository;
 
-  MovieDetailController(this.repository);
-
+  MovieDetailController(
+    this.repository,
+  );
   MovieDetailModel? movieDetail;
+
   MovieError? movieError;
   bool loading = true;
 
@@ -20,7 +22,8 @@ class MovieDetailController extends ChangeNotifier {
       (error) => movieError = error,
       (detail) => movieDetail = detail,
     );
-    print(movieDetail);
+    print('Ctrl: ' + movieDetail!.voteCount.toString());
+    notifyListeners();
     return result;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/controller/movie_details_controler.dart';
 import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/pages/movie_details_page/components/card_label_widget.dart';
+import 'package:provider/provider.dart';
 
 class BodyLabelWidget extends StatefulWidget {
   const BodyLabelWidget({Key? key}) : super(key: key);
@@ -11,16 +13,18 @@ class BodyLabelWidget extends StatefulWidget {
 class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   @override
   Widget build(BuildContext context) {
+    MovieDetailController _movieDetailController =
+        Provider.of<MovieDetailController>(context, listen: false);
     return Column(
       children: [
-        _buildBoxOne(),
-        _buildBoxTwo(),
-        _buildBoxThree(),
+        _buildBoxOne(context),
+        _buildBoxTwo(context),
+        _buildBoxThree(context),
       ],
     );
   }
 
-  Widget _buildBoxOne() {
+  Widget _buildBoxOne(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: const [
@@ -43,56 +47,59 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
     );
   }
 
-  Widget _buildBoxTwo() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 0, top: 10, right: 0, bottom: 10),
-      child: Row(
-        children: [
-          Container(
-            // color: Colors.red,
-            child: Row(
-              children: const [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Icon(Icons.favorite),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  '1.2k Likes',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+  Widget _buildBoxTwo(BuildContext context) {
+    return Consumer<MovieDetailController>(
+      builder: (context, value, child) => Padding(
+        padding: const EdgeInsets.only(left: 0, top: 10, right: 0, bottom: 10),
+        child: Row(
+          children: [
+            Container(
+              // color: Colors.red,
+              child: Row(
+                children: [
+                  const Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.favorite),
                   ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 30),
-          Container(
-            // color: Colors.red,
-            child: Row(
-              children: const [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Icon(Icons.circle_outlined),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  '3 of 10 Watched',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+                  const SizedBox(width: 10),
+                  Text(
+                    // '1.2k Likes',
+                    '${value.movieDetail!.voteCount}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            const SizedBox(width: 30),
+            Container(
+              // color: Colors.red,
+              child: Row(
+                children: const [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.circle_outlined),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    '3 of 10 Watched',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildBoxThree() {
+  Widget _buildBoxThree(BuildContext context) {
     return Container(
       // color: Colors.yellow,
       height: MediaQuery.of(context).size.height * 0.36,

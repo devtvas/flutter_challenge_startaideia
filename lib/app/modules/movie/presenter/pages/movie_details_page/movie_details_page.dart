@@ -4,23 +4,15 @@ import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/pages/
 import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/pages/movie_details_page/components/header_label_widget.dart';
 import 'package:provider/provider.dart';
 
-class MovieDetailPage extends StatefulWidget {
-  const MovieDetailPage({Key? key}) : super(key: key);
-
-  @override
-  State<MovieDetailPage> createState() => _MovieDetailPageState();
-}
-
-class _MovieDetailPageState extends State<MovieDetailPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class MovieDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<MovieDetailController>(
-      builder: (context, controller, child) => Scaffold(
+    MovieDetailController _toDoNotifier =
+        Provider.of<MovieDetailController>(context, listen: false);
+    _toDoNotifier.fetchMovieById(3);
+    return Consumer<MovieDetailController>(builder: (context, value, child) {
+      print('Page: ' + value.movieDetail!.voteCount.toString());
+      return Scaffold(
         body: Column(
           children: [
             const HeaderLabelWidget(
@@ -37,7 +29,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 }

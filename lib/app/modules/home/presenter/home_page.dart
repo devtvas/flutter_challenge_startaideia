@@ -18,8 +18,7 @@ class HomePage extends StatelessWidget {
                   onPressed: () async {
                     await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const MovieDetailPage(),
+                        builder: (BuildContext context) => MovieDetailPage(),
                       ),
                     );
                   },
