@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge_startaideia/app/modules/home/domain/home_model.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/domain/movie_model.dart';
 import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/controller/movie_details_controler.dart';
 import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/pages/movie_details_page/components/card_label_widget.dart';
 import 'package:provider/provider.dart';
@@ -12,9 +14,18 @@ class BodyLabelWidget extends StatefulWidget {
 
 class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   @override
+  void initState() {
+    super.initState();
+    _initState();
+  }
+
+  void _initState() {
+    var result = context.read<MovieDetailController>();
+    result.fetchMovieByIdSimilar(3);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    MovieDetailController _movieDetailController =
-        Provider.of<MovieDetailController>(context, listen: false);
     return Column(
       children: [
         _buildBoxOne(context),
@@ -25,25 +36,37 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   }
 
   Widget _buildBoxOne(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
-        Expanded(
-          child: Text(
-            'The Very Best Of Johnny Depp',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+    return Consumer<MovieDetailController>(
+      builder: (context, value, child) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Expanded(
+            child: Text(
+              'The Very Best Of Johnny Depp',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: Icon(Icons.favorite),
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: IconButton(
+                onPressed: () {
+                  print('IconButton');
+                  value.like();
+                  value.fetchMovieByIdSimilar(3);
+                  setState(() {});
+                },
+                icon: value.isLike == true
+                    ? Icon(Icons.favorite)
+                    : Icon(Icons.favorite_border),
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -63,8 +86,9 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    // '1.2k Likes',
-                    '${value.movieDetail!.voteCount}',
+                    value.movieDetail?.voteCount == null
+                        ? '0k Likes'
+                        : '${value.movieDetail?.voteCount}k Likes',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -77,15 +101,17 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
             Container(
               // color: Colors.red,
               child: Row(
-                children: const [
-                  Align(
+                children: [
+                  const Align(
                     alignment: Alignment.centerRight,
-                    child: Icon(Icons.circle_outlined),
+                    child: Icon(Icons.supervised_user_circle_outlined),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Text(
-                    '3 of 10 Watched',
-                    style: TextStyle(
+                    value.movieDetail?.popularity == null
+                        ? '0 Watched'
+                        : '${value.movieDetail?.popularity} Watched',
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -100,16 +126,33 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   }
 
   Widget _buildBoxThree(BuildContext context) {
-    return Container(
-      // color: Colors.yellow,
-      height: MediaQuery.of(context).size.height * 0.36,
-      child: ListView.builder(
-        itemCount: 8,
-        // itemCount: movies.length,
-        itemBuilder: (context, index) => MovieCard(
-            // movie: movies[index],
-            ),
-        scrollDirection: Axis.vertical,
+    return Consumer<MovieDetailController>(
+      builder: (context, data, child) => Container(
+        // color: Colors.yellow,
+        height: MediaQuery.of(context).size.height * 0.36,
+        child: data.movies.isEmpty //se retorno null(renderiza a mensagem)
+            ? const Center(
+                child: Text(
+                  'Lista vazia no momento!',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemCount: data.movies.length,
+                itemBuilder: (ctx, i) {
+                  // MovieModel objMovie = data.movies[i];
+                  // return ListTile(
+                  //   title: Text('${data.movies[i].id}'),
+                  // );
+                  return MovieCard(
+                    movie: data.movies[i],
+                    dateFormat: data.dateFormat,
+                  );
+                },
+                scrollDirection: Axis.vertical,
+              ),
       ),
     );
   }

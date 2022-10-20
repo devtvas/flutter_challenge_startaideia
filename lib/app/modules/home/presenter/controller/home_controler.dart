@@ -1,5 +1,6 @@
 import 'package:flutter_challenge_startaideia/app/modules/home/data/home_repository.dart';
 import 'package:flutter_challenge_startaideia/app/modules/home/domain/home_model.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/domain/movie_model.dart';
 
 class HomeControler {
   final _repository = HomeRepository();

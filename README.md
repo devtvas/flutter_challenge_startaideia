@@ -1,6 +1,9 @@
 <h1>Resolucao do desafio técnico para o processo seletivo da empresa Startaideia.</h1>
 
 
+## 👋Seja bem-vindo ao meu desafio tecnico!
+ - eu detalhei todos passos com carinho para voce entender meu codigo.
+
 ### Layout espectativa
 
 <img src="https://is4-ssl.mzstatic.com/image/thumb/Purple114/v4/97/0e/e2/970ee217-13cf-1674-b016-461aca657663/pr_source.png/460x0w.png" height="350em" /> 
@@ -85,4 +88,4 @@ Caso tenha dificuldades em entender o teste ou tenha alguma dúvida, por favor, 
 
 ## Candidato/Desenvolvedor
 
-Seguem meu perfil do Linkedin, [@devtvas](https://www.linkedin.com/in/devtvas/).
+Feito com 💜 por [@devtvas](https://www.linkedin.com/in/devtvas/).

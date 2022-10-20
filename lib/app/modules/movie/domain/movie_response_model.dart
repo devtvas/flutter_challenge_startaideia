@@ -4,15 +4,15 @@ import 'movie_model.dart';
 
 class MovieResponseModel {
   int? page;
-  final int? totalResults;
+  final List<MovieModel> movies = [];
   final int? totalPages;
-  final List<MovieModel>? movies;
+  final int? totalResults;
 
   MovieResponseModel({
     this.page,
-    this.totalResults,
+    movies,
     this.totalPages,
-    this.movies,
+    this.totalResults,
   });
 
   factory MovieResponseModel.fromJson(String str) =>

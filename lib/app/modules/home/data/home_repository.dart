@@ -8,7 +8,7 @@ class HomeRepository {
   Future fetchAllMovies(int page) async {
     try {
       final response = await _dio.get('/movie/popular?page=$page');
-      final model = MovieModel.fromMap(response.data);
+      final model = HomeModel.fromMap(response.data);
       return model;
     } on DioError catch (e) {
       print(e);

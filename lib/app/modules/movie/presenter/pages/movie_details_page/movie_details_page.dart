@@ -11,7 +11,6 @@ class MovieDetailPage extends StatelessWidget {
         Provider.of<MovieDetailController>(context, listen: false);
     _toDoNotifier.fetchMovieById(3);
     return Consumer<MovieDetailController>(builder: (context, value, child) {
-      print('Page: ' + value.movieDetail!.voteCount.toString());
       return Scaffold(
         body: Column(
           children: [

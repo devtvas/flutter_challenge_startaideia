@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/domain/movie_model.dart';
+import 'package:intl/intl.dart';
 
 class MovieCard extends StatelessWidget {
+  final MovieModel movie;
+  final DateFormat dateFormat;
+
+  MovieCard({Key? key, required this.movie, required this.dateFormat})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double height = 140;
@@ -12,7 +20,7 @@ class MovieCard extends StatelessWidget {
           Container(
             height: height,
             child: Image.network(
-                'https://image.tmdb.org/t/p/w500/yJdeWaVXa2se9agI6B4mQunVYkB.jpg'),
+                'https://image.tmdb.org/t/p/w500/${movie.posterPath}'),
           ),
           Expanded(
             // Add from this line
@@ -34,16 +42,18 @@ class MovieCard extends StatelessWidget {
                     ],
                   ),
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        'Ip Man 4: The Finale',
-                        style: TextStyle(
+                        // 'Ip Man 4: The Finale',
+                        movie.title,
+                        style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Expanded(child: Text('1990 Drama, Fantasy'))
+                  Expanded(
+                      child: Text('${dateFormat.format(movie.releaseDate)}'))
                 ],
               ),
             ),
