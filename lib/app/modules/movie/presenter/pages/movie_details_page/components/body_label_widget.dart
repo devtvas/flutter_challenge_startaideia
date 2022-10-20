@@ -142,10 +142,6 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
             : ListView.builder(
                 itemCount: data.movies.length,
                 itemBuilder: (ctx, i) {
-                  // MovieModel objMovie = data.movies[i];
-                  // return ListTile(
-                  //   title: Text('${data.movies[i].id}'),
-                  // );
                   return MovieCard(
                     movie: data.movies[i],
                     dateFormat: data.dateFormat,
