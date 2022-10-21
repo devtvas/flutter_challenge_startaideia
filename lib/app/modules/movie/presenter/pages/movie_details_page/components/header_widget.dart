@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/domain/movie_person_model.dart';
 
-class HeaderLabelWidget extends StatelessWidget {
-  final String image;
-  const HeaderLabelWidget({Key? key, required this.image}) : super(key: key);
+class HeaderWidget extends StatelessWidget {
+  final MoviePersonModel movie;
+  const HeaderWidget({Key? key, required this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +13,14 @@ class HeaderLabelWidget extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.asset(
-              image,
-              fit: BoxFit.cover,
-            ),
+            movie.profile_path.isEmpty
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                // : Image.asset('assets/images/profile.png', fit: BoxFit.cover),
+                : Image.network(
+                    'https://image.tmdb.org/t/p/w500${movie.profile_path}',
+                    fit: BoxFit.cover),
             Positioned.fill(
               child: Container(
                 decoration: BoxDecoration(

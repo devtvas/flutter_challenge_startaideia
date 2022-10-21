@@ -6,23 +6,51 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: Container(
+        body: Stack(
+      alignment: Alignment.center,
+      children: [
+        //image de fundo
+        _buildImage(height),
+        //button
+        _buildButton(context)
+      ],
+    ));
+  }
+
+  Widget _buildImage(double height) {
+    return Container(
+      color: Colors.red,
+      width: height,
+      height: height,
+      child: Image.asset('assets/images/profile.png', fit: BoxFit.fill),
+    );
+  }
+
+  Widget _buildButton(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0, top: 200, right: 0, bottom: 0),
+      child: Container(
+        // color: Colors.yellow,
+        width: 100,
+        height: 100,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Center(child: Text("Home")),
+            // const Center(child: Text("Home")),
             Center(
               child: ElevatedButton(
-                  onPressed: () async {
-                    await Navigator.of(context).push(
+                  onPressed: () {
+                    Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (BuildContext context) => MovieDetailPage(),
                       ),
                     );
                   },
-                  child: Text("Movie")),
+                  child: const Text("Movies")),
             ),
           ],
         ),

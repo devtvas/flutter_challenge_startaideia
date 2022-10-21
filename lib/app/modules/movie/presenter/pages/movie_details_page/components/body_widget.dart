@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_challenge_startaideia/app/modules/home/domain/home_model.dart';
 import 'package:flutter_challenge_startaideia/app/modules/movie/domain/movie_model.dart';
-import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/controller/movie_details_controler.dart';
-import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/pages/movie_details_page/components/card_label_widget.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/controller/movie_list_controler.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/controller/movie_person_controler.dart';
+import 'package:flutter_challenge_startaideia/app/modules/movie/presenter/pages/movie_details_page/components/card_item_widget.dart';
 import 'package:provider/provider.dart';
 
-class BodyLabelWidget extends StatefulWidget {
-  const BodyLabelWidget({Key? key}) : super(key: key);
+class BodyWidget extends StatefulWidget {
+  const BodyWidget({Key? key}) : super(key: key);
 
   @override
-  State<BodyLabelWidget> createState() => _BodyLabelWidgetState();
+  State<BodyWidget> createState() => _BodyWidgetState();
 }
 
-class _BodyLabelWidgetState extends State<BodyLabelWidget> {
+class _BodyWidgetState extends State<BodyWidget> {
   @override
   void initState() {
     super.initState();
@@ -20,8 +21,8 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   }
 
   void _initState() {
-    var result = context.read<MovieDetailController>();
-    result.fetchMovieByIdSimilar(3);
+    var list = context.read<MovieListController>();
+    list.fetchMovieByIdSimilar(85);
   }
 
   @override
@@ -36,14 +37,17 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   }
 
   Widget _buildBoxOne(BuildContext context) {
-    return Consumer<MovieDetailController>(
+    String name = 'Artist';
+    return Consumer<MoviePersonController>(
       builder: (context, value, child) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Expanded(
+          Expanded(
             child: Text(
-              'The Very Best Of Johnny Depp',
-              style: TextStyle(
+              value.movies.name.isEmpty
+                  ? 'The Very Best Of ${name}'
+                  : 'The Very Best Of ${value.movies.name}',
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -54,9 +58,7 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
               alignment: Alignment.centerRight,
               child: IconButton(
                 onPressed: () {
-                  print('IconButton');
                   value.like();
-                  value.fetchMovieByIdSimilar(3);
                   setState(() {});
                 },
                 icon: value.isLike == true
@@ -71,7 +73,7 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   }
 
   Widget _buildBoxTwo(BuildContext context) {
-    return Consumer<MovieDetailController>(
+    return Consumer<MoviePersonController>(
       builder: (context, value, child) => Padding(
         padding: const EdgeInsets.only(left: 0, top: 10, right: 0, bottom: 10),
         child: Row(
@@ -86,9 +88,9 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    value.movieDetail?.voteCount == null
-                        ? '0k Likes'
-                        : '${value.movieDetail?.voteCount}k Likes',
+                    value.movies.popularity.isNaN
+                        ? '0 Likes'
+                        : '${value.movies.popularity} Likes',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -108,9 +110,9 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    value.movieDetail?.popularity == null
+                    value.movies.popularity.isNaN
                         ? '0 Watched'
-                        : '${value.movieDetail?.popularity} Watched',
+                        : '${value.movies.popularity} Watched',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -126,11 +128,11 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
   }
 
   Widget _buildBoxThree(BuildContext context) {
-    return Consumer<MovieDetailController>(
+    return Consumer<MovieListController>(
       builder: (context, data, child) => Container(
         // color: Colors.yellow,
         height: MediaQuery.of(context).size.height * 0.36,
-        child: data.movies.isEmpty //se retorno null(renderiza a mensagem)
+        child: data.listMovies.isEmpty //se retorno null(renderiza a mensagem)
             ? const Center(
                 child: Text(
                   'Lista vazia no momento!',
@@ -140,10 +142,10 @@ class _BodyLabelWidgetState extends State<BodyLabelWidget> {
                 ),
               )
             : ListView.builder(
-                itemCount: data.movies.length,
+                itemCount: data.listMovies.length,
                 itemBuilder: (ctx, i) {
-                  return MovieCard(
-                    movie: data.movies[i],
+                  return MovieCardItem(
+                    movie: data.listMovies[i],
                     dateFormat: data.dateFormat,
                   );
                 },
